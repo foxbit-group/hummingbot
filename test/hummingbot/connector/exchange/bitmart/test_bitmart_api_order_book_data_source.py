@@ -68,7 +68,7 @@ class BitmartAPIOrderBookDataSourceUnitTests(IsolatedAsyncioWrapperTestCase):
                 "symbol": "COINALPHA_HBOT",
                 "asks": [
                     [
-                        "100.00",
+                        "1.00",
                         "0.007000"
                     ],
                     [
