@@ -70,10 +70,6 @@ class BitmartAPIOrderBookDataSourceUnitTests(IsolatedAsyncioWrapperTestCase):
                     [
                         "1.00",
                         "0.007000"
-                    ],
-                    [
-                        "1.00000",
-                        "6997.00"
                     ]
                 ],
                 "bids": [
@@ -133,7 +129,11 @@ class BitmartAPIOrderBookDataSourceUnitTests(IsolatedAsyncioWrapperTestCase):
             asyncio.gather(self.data_source.get_new_order_book(self.trading_pair)))
         order_book: OrderBook = results[0]
 
+<<<<<<< HEAD
         self.assertTrue(isinstance(order_book, OrderBook))
+=======
+        self.assertTrue(type(order_book) is OrderBook)
+>>>>>>> b2baf90db (Fixing order book test)
         self.assertEqual(order_book.snapshot_uid, mock_response["data"]["ts"])
 
         self.assertEqual(mock_response["data"]["ts"], order_book.snapshot_uid)
@@ -143,7 +143,7 @@ class BitmartAPIOrderBookDataSourceUnitTests(IsolatedAsyncioWrapperTestCase):
         self.assertEqual(float(mock_response["data"]["bids"][0][0]), bids[0].price)
         self.assertEqual(float(mock_response["data"]["bids"][0][1]), bids[0].amount)
         self.assertEqual(mock_response["data"]["ts"], bids[0].update_id)
-        self.assertEqual(2, len(asks))
+        self.assertEqual(1, len(asks))
         self.assertEqual(float(mock_response["data"]["asks"][0][0]), asks[0].price)
         self.assertEqual(float(mock_response["data"]["asks"][0][1]), asks[0].amount)
         self.assertEqual(mock_response["data"]["ts"], asks[0].update_id)
