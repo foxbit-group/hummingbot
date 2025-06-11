@@ -28,6 +28,7 @@ MY_TRADES_PATH_URL = "trades"
 ORDER_PATH_URL = "orders"
 CANCEL_ORDER_PATH_URL = "orders/cancel"
 GET_ORDER_BY_CLIENT_ID = "orders/by-client-order-id/{}"
+GET_ORDER_BY_ID = "orders/by-order-id/{}"
 
 WS_HEADER = {
     "Content-Type": "application/json",
@@ -67,7 +68,7 @@ ORDER_STATE = {
     "NEW": OrderState.OPEN,
     "FILLED": OrderState.FILLED,
     "PARTIALLY_FILLED": OrderState.PARTIALLY_FILLED,
-    "PENDING_CANCEL": OrderState.OPEN,
+    "PENDING_CANCEL": OrderState.PENDING_CANCEL,
     "CANCELED": OrderState.CANCELED,
     "PARTIALLY_CANCELED": OrderState.CANCELED,
     "REJECTED": OrderState.FAILED,
@@ -105,6 +106,7 @@ RATE_LIMITS = [
     RateLimit(limit_id=PING_PATH_URL, limit=5, time_interval=ONE_SECOND),
     RateLimit(limit_id=ACCOUNTS_PATH_URL, limit=15, time_interval=ONE_SECOND),
     RateLimit(limit_id=MY_TRADES_PATH_URL, limit=5, time_interval=ONE_SECOND),
+    RateLimit(limit_id=GET_ORDER_BY_ID, limit=30, time_interval=TWO_SECONDS),
     RateLimit(limit_id=GET_ORDER_BY_CLIENT_ID, limit=30, time_interval=TWO_SECONDS),
     RateLimit(limit_id=CANCEL_ORDER_PATH_URL, limit=30, time_interval=TWO_SECONDS),
     RateLimit(limit_id=ORDER_PATH_URL, limit=30, time_interval=TWO_SECONDS),

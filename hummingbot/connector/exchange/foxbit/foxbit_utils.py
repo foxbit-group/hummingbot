@@ -28,9 +28,10 @@ def get_client_order_id(is_buy: bool) -> str:
     :param is_buy: True if the order is a buy order, False if the order is a sell order
     :return: an identifier for the new order to be used in the client
     """
-    newId = str(get_tracking_nonce())[4:]
-    side = "00" if is_buy else "01"
-    return f"{CONSTANTS.HBOT_ORDER_ID_PREFIX}{side}{newId}"
+    side = "1" if is_buy else "2"
+    instance_order_id_prefix = os.environ.get('INSTANCE_ORDER_ID_PREFIX') or "000"
+    new_id = str(get_tracking_nonce())[4:]
+    return f"{side}{instance_order_id_prefix}{new_id}"
 
 
 def get_ws_message_frame(endpoint: str,
@@ -132,30 +133,30 @@ class FoxbitConfigMap(BaseConnectorConfigMap):
     connector: str = Field(default="foxbit", client_data=None)
     foxbit_api_key: SecretStr = Field(
         default=...,
-        client_data=ClientFieldData(
-            prompt=lambda cm: "Enter your Foxbit API key",
-            is_secure=True,
-            is_connect_key=True,
-            prompt_on_new=True,
-        )
+        json_schema_extra = {
+            "prompt": "Enter your Foxbit API key",
+            "is_secure": True,
+            "is_connect_key": True,
+            "prompt_on_new": True,
+        }
     )
     foxbit_api_secret: SecretStr = Field(
         default=...,
-        client_data=ClientFieldData(
-            prompt=lambda cm: "Enter your Foxbit API secret",
-            is_secure=True,
-            is_connect_key=True,
-            prompt_on_new=True,
-        )
+        json_schema_extra={
+            "prompt": "Enter your Foxbit API secret",
+            "is_secure": True,
+            "is_connect_key": True,
+            "prompt_on_new": True,
+        }
     )
     foxbit_user_id: SecretStr = Field(
         default=...,
-        client_data=ClientFieldData(
-            prompt=lambda cm: "Enter your Foxbit User ID",
-            is_secure=True,
-            is_connect_key=True,
-            prompt_on_new=True,
-        )
+        json_schema_extra={
+            "prompt": lambda cm: "Enter your Foxbit User ID",
+            "is_secure": True,
+            "is_connect_key": True,
+            "prompt_on_new": True,
+    }
     )
 
     class Config:
